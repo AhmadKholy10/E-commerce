@@ -20,5 +20,17 @@ public class CategoryService {
 	public List<Category> getAll(){
 		return categoryRepository.findAll();
 	}
+	
+	public void update(Long categoryId, Category updatedCategory) {
+		Category category = categoryRepository.getById(categoryId);
+		category.setCategoryName(updatedCategory.getCategoryName());
+		category.setDescription(updatedCategory.getDescription());
+		category.setImageUrl(updatedCategory.getImageUrl());
+		categoryRepository.save(category);
+		}
+	
+	public boolean findById(Long categoryId) {
+		return categoryRepository.findById(categoryId).isPresent();
+	}
 
 }
