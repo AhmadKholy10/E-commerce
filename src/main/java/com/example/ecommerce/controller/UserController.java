@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.DTO.ResponseDTO;
 import com.example.ecommerce.DTO.user.SignUpDTO;
+import com.example.ecommerce.DTO.user.SigninDTO;
+import com.example.ecommerce.DTO.user.SigninResponseDTO;
 import com.example.ecommerce.service.UserService;
 
 @RestController
@@ -20,6 +22,11 @@ public class UserController {
 	@PostMapping("/signup")
 	public ResponseDTO signup(@RequestBody SignUpDTO signupDTO) throws Exception{
 		return userService.signup(signupDTO);
+	}
+	
+	@PostMapping("/signin")
+	public SigninResponseDTO signin(@RequestBody SigninDTO signinDTO) {
+		return userService.signin(signinDTO);
 	}
 
 }
