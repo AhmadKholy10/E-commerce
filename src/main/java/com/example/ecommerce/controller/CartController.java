@@ -3,6 +3,7 @@ package com.example.ecommerce.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,5 +62,19 @@ public class CartController {
 	}
 	
 	//Delete a cart item for a user
+	@DeleteMapping("/{cartItemId}")
+	public ResponseEntity<ApiResponse> deleteCartItem(@PathVariable Long cartItemId,
+													  @RequestParam("token") String token){
+		//authenticate the token
+		tokenService.authenticate(token);
+				
+		//find the user
+		User user = tokenService.getUser(token);
+		
+		//delete the item
+		cartService.deleteItem(user, cartItemId);
+		return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Item removed from the cart successfully"),
+				   HttpStatus.OK);
+	}
 
 }

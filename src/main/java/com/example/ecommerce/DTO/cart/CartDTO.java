@@ -2,31 +2,33 @@ package com.example.ecommerce.DTO.cart;
 
 import java.util.List;
 
-import com.example.ecommerce.DTO.ProductDTO;
-
 public class CartDTO {
-	private List<ProductDTO> products;
+	private List<CartItemDTO> products;
 	private double totalCost;
 	
 	public CartDTO() {
 		
 	}
 	
-	public CartDTO(List<ProductDTO> products) {
+	public CartDTO(List<CartItemDTO> products) {
 		super();
 		this.products = products;
 		this.totalCost = calculateTotalCost();
 	}
 	
 	public double calculateTotalCost() {
-	  return products.stream().mapToDouble(ProductDTO::getPrice).sum();
+	  double sum = 0;
+	  for(CartItemDTO cartItem : products) {
+		  sum += cartItem.getProductDTO().getPrice() * cartItem.getQuantity() ;
+	  }
+	  return sum;
 	}
 
-	public List<ProductDTO> getProducts() {
+	public List<CartItemDTO> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<ProductDTO> products) {
+	public void setProducts(List<CartItemDTO> products) {
 		this.products = products;
 		this.totalCost = calculateTotalCost();
 	}
